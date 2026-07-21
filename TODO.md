@@ -21,16 +21,17 @@
 - [ ] Validate against classical paradoxes (liar, sorites) and against
       Hegel's own Being/Nothing/Becoming triad
 - [ ] Add property-based tests (e.g. Hypothesis) to check invariants across
-      random thesis/antithesis combinations, not just the four hand-picked
-      cases in `test_core.py`
+      random thesis/antithesis combinations, not just the hand-picked cases
+      in `test_core.py`
 
 ## Docs
 - [ ] Decide and document the interpretive reading adopted (Priest vs.
-      Bordignon) — maybe in README
-- [ ] Update CHANGELOG.md `[Unreleased]` section now that the core skeleton
-      is actually implemented, not just planned
+      Bordignon)
+- [x] Close out CHANGELOG.md `[0.1.0]` with the real release date
 
 ## Release
-- [ ] Green CI on 3.12-3.14 (should pass as-is — verify on first push)
-- [ ] Publish 0.1.0 to PyPI via `uv build` + `uv publish`
+- [x] Decide supported Python range — 3.12–3.14
+- [x] Green CI on 3.12–3.14
+- [x] Publish 0.1.0 to PyPI (2026-07-17) via `uv build` + `uv publish`
+- [ ] Bump version for the next development cycle
 - [ ] Split `operators.py` out of `core.py` once the truth-value domain grows
