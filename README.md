@@ -77,4 +77,4 @@ t2 = s.as_thesis()
 
 # 📜 Libre Software
 
-If you have ideas for improvements or new features, please open an issue or submit a pull request! Make sure to follow the existing code style and include tests for any new functionality. This project is licensed under the MIT License. You are free to use, modify, and distribute this software. For more information, please refer to the [LICENSE](LICENSE) file.
+If you have ideas for improvements or new features, please open an issue or submit a pull request. Make sure to follow the existing code style and include tests for any new functionality. Licensed under the MIT License, so you are free to use, modify, and distribute this software. Refer to the [LICENSE](LICENSE) for more information.
