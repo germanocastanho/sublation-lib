@@ -1,61 +1,98 @@
-from typing import Optional
+from .truths import THRESHOLD, TruthValue
 
 
-class Thesis:
-    def __init__(self, thesis: bool = True, antithesis: Optional[bool] = None):
-        self.thesis = thesis
-        self.antithesis = (not thesis) if antithesis is None else antithesis
-        self.synthesis = None
+class Dialectical:
+    """
+    Shared behavior for Thesis, Antithesis, and Synthesis. Each subclass is only responsible for building self.value, self.thesis, and self.antithesis in its own __init__ — the four methods below read those fields the same way regardless of which subclass created them.
+    """
 
-    def negation(self) -> bool:
-        return not self.thesis
-
-    def contradiction(self) -> bool:
-        return self.thesis and self.antithesis
-
-    def becoming(self) -> bool:
-        return self.thesis and not self.antithesis
-
-    def sublation(self) -> bool:
-        return self.thesis or self.antithesis
-
-
-class Antithesis:
-    def __init__(self, antithesis: bool = False, thesis: Optional[bool] = None):
-        self.antithesis = antithesis
-        self.thesis = (not antithesis) if thesis is None else thesis
-        self.synthesis = None
+    value: TruthValue
+    thesis: bool
+    antithesis: bool
 
     def negation(self) -> bool:
-        return not self.antithesis
+        """
+        Whether the negation of this value holds cleanly true. Inverts the `mu` and `lam` of the underlying TruthValue and checks whether that inverted value is true.
+        """
+
+        negation = self.value.invert().is_true()
+        return negation
 
     def contradiction(self) -> bool:
-        return self.antithesis and self.thesis
+        """
+        Whether evidence for and against are both strong at once. State that a plain bool can never represent - True and False at the same time -, but that TruthValue can.
+        """
+
+        contradiction = self.value.is_contradictory()
+        return contradiction
 
     def becoming(self) -> bool:
-        return self.antithesis and not self.thesis
+        """
+        Whether this value is a clean, uncontested affirmation. State that a plain bool can represent, but that TruthValue can also represent. This method is just a convenience for when you want to check for the simplest case.
+        """
+
+        becoming = self.value.is_true()
+        return becoming
 
     def sublation(self) -> bool:
-        return self.thesis or self.antithesis
+        """
+        Whether this value has been determined at all, either way. Corresponds to the Hegelian notion of `Aufhebung`. In this case, it means that the TruthValue has crossed the threshold in either direction, so it is no longer indeterminate and has been "sublated" (Aufgehoben).
+        """
+
+        sublation = not self.value.is_indeterminate()
+        return sublation
 
 
-class Synthesis:
-    def __init__(self, thesis: Thesis, antithesis: Antithesis):
-        self.thesis = thesis.thesis
-        self.antithesis = antithesis.antithesis
+class Thesis(Dialectical):
+    """
+    Thesis: a proposition asserted as posited. By default, asserting the thesis implies denying its antithesis, but that inference can be overridden by passing antithesis explicitly.
+    """
+
+    def __init__(
+        self,
+        thesis: bool = True,
+        antithesis: bool | None = None,
+    ) -> None:
+        antithesis = (not thesis) if antithesis is None else antithesis
+
+        self.value = TruthValue(mu=float(thesis), lam=float(antithesis))
+        self.thesis = self.value.mu >= THRESHOLD
+        self.antithesis = self.value.lam >= THRESHOLD
+
+
+class Antithesis(Dialectical):
+    """
+    Antithesis: a proposition asserted as the negation of a thesis. By default, asserting the antithesis implies denying the thesis, but that inference can be overridden by passing thesis explicitly.
+    """
+
+    def __init__(
+        self,
+        antithesis: bool = False,
+        thesis: bool | None = None,
+    ) -> None:
+        thesis = (not antithesis) if thesis is None else thesis
+
+        self.value = TruthValue(mu=float(thesis), lam=float(antithesis))
+        self.thesis = self.value.mu >= THRESHOLD
+        self.antithesis = self.value.lam >= THRESHOLD
+
+
+class Synthesis(Dialectical):
+    """
+    Synthesis: combines a Thesis and an Antithesis - it trusts the thesis only on its own claim (mu) and the antithesis only on its own claim (lam), rather than pooling everything either side happens to carry.
+    """
+
+    def __init__(self, thesis: Thesis, antithesis: Antithesis) -> None:
+        self.value = TruthValue(mu=thesis.value.mu, lam=antithesis.value.lam)
+
+        self.thesis = self.value.mu >= THRESHOLD
+        self.antithesis = self.value.lam >= THRESHOLD
         self.synthesis = self.sublation()
 
-    def negation(self) -> bool:
-        return not self.thesis
-
-    def contradiction(self) -> bool:
-        return self.thesis and self.antithesis
-
-    def becoming(self) -> bool:
-        return self.thesis and not self.antithesis
-
-    def sublation(self) -> bool:
-        return self.thesis or self.antithesis
-
     def as_thesis(self) -> Thesis:
-        return Thesis(thesis=self.thesis, antithesis=self.antithesis)
+        """
+        The synthesys generates a new Thesis for the next round of dialectical evaluation. The new thesis will have a new antithesis, which will be the negation of this synthesis. At the end of the next round, the new thesis will be evaluated against its antithesis etc.
+        """
+
+        next_round = Thesis(thesis=self.thesis, antithesis=self.antithesis)
+        return next_round

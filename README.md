@@ -1,6 +1,9 @@
 # 🧠 Sublation
 
-Classical boolean logic forces every proposition into exactly one of two states. That works well for most software, but it can't represent situations where a claim and its negation are both partially warranted, or where neither is warranted yet. As a solution, `Sublation` models truth as a relationship between a **thesis** and an **antithesis**, and derives a **synthesis** from how they interact — allowing states like contradiction and becoming to be detected rather than defined away.
+This library formalizes dialectical logic as a case of four-valued reasoning
+(true / false / contradictory / indeterminate), grounded in Belnap–Dunn
+logic (FDE) and the bilattice structure behind paraconsistent annotated
+logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way.
 
 # ✨ Main Features
 
