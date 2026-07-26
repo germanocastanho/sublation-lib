@@ -3,7 +3,7 @@
 This library formalizes dialectical logic as a case of four-valued reasoning
 (true / false / contradictory / indeterminate), grounded in Belnap–Dunn
 logic (FDE) and the bilattice structure behind paraconsistent annotated
-logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way.
+logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way. Try it out!
 
 # ✨ Main Features
 
@@ -14,7 +14,7 @@ logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framewo
 # ✅ Prerequisites
 
 - Python 3.12+ installed on your machine
-- Astral Uv package manager (optional)
+- Astral uv package manager (optional)
 - Dependencies listed in `requirements.txt`
 
 # ⚙️ Installation
@@ -23,8 +23,8 @@ logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framewo
 
 ```bash
 # Clone the repository
-git clone https://github.com/germanocastanho/sublation-package
-cd sublation-package/
+git clone https://github.com/germanocastanho/sublation-lib
+cd sublation-lib/
 
 # Create a venv (optional)
 python3 -m venv .venv
@@ -37,12 +37,14 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+Or just `pip install sublation`!
+
 ### For development:
 
 ```bash
 # Clone the repository
-git clone https://github.com/germanocastanho/sublation-package
-cd sublation-package/
+git clone https://github.com/germanocastanho/sublation-lib
+cd sublation-lib/
 
 # Create a venv (optional)
 python3 -m venv .venv
@@ -77,4 +79,4 @@ t2 = s.as_thesis()
 
 # 📜 Libre Software
 
-If you have ideas for improvements or new features, please open an issue or submit a pull request. Make sure to follow the existing code style and include tests for any new functionality. Licensed under the MIT License, so you are free to use, modify, and distribute this software. Refer to the [LICENSE](LICENSE) for more information.
+If you have ideas for improvements or new features, please open an issue or submit a pull request. Make sure to follow the existing code style and include tests for any new functionality. Licensed under the MIT License, so you are free to use, modify, and distribute this software. Please refer to the [LICENSE](LICENSE) for more!
