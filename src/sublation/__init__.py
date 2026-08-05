@@ -1,5 +1,5 @@
 from .core import Antithesis, Synthesis, Thesis
 from .truths import TruthValue
 
-__all__ = ["Thesis", "Antithesis", "Synthesis", "TruthValue"]
-__version__ = "0.1.0"
+__all__ = ["Antithesis", "Synthesis", "Thesis", "TruthValue"]
+__version__ = "0.2.0"
