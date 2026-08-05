@@ -10,6 +10,7 @@ logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framewo
 - **Thesis** and **Antithesis** classes to represent claims and their negations.
 - **Synthesis** class to represent the interaction between a thesis and an antithesis.
 - Methods to detect **negation**, **contradiction**, **becoming**, and **sublation**.
+- **TruthValue** class backing all three, an evidence pair (`mu` for, `lam` against) making contradiction and indeterminacy representable.
 
 # ✅ Prerequisites
 
