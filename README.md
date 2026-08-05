@@ -1,9 +1,6 @@
 # 🧠 Sublation
 
-This library formalizes dialectical logic as a case of four-valued reasoning
-(true / false / contradictory / indeterminate), grounded in Belnap–Dunn
-logic (FDE) and the bilattice structure behind paraconsistent annotated
-logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way. Try it out!
+This library formalizes dialectical logic as a case of four-valued reasoning (true / false / contradictory / indeterminate), grounded in Belnap–Dunn logic (FDE) and the bilattice structure behind paraconsistent annotated logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way. Try it out!
 
 # ✨ Main Features
 
