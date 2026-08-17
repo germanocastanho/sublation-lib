@@ -27,7 +27,7 @@ denied = Thesis(False)          # mu=0.0, lam=1.0
 
 ### Overriding the Inference
 
-The inferred complement is a default, not a law. Supplying `antithesis` explicitly breaks the classical linkage, and this is the only way to reach the two non-classical corners from a `Thesis`:
+The inferred complement is a default, not a law, and it belongs to the bool path alone. Supplying `antithesis` explicitly breaks the classical linkage, one way to reach the two non-classical corners from a `Thesis`:
 
 ```python
 contested = Thesis(True, True)    # mu=1.0, lam=1.0 — both asserted
@@ -38,6 +38,17 @@ unexamined.sublation()            # False — nothing has been settled
 ```
 
 That a single library call decides between the classical and the non-classical reading is the practical content of the whole design. `Thesis(True)` and `Thesis(True, True)` agree on the evidence for and differ on the evidence against; classical logic cannot express the difference, because it derives the second from the first.
+
+### Continuous Degrees
+
+A degree may also be a float in `[0.0, 1.0]`, and then the interior of the square becomes reachable, not only its corners. A continuous thesis infers *no* complement — asserting evidence for a proposition says nothing about the evidence against it, which is the independence the whole library rests on:
+
+```python
+graded = Thesis(0.7)          # mu=0.7, lam=0.0 — nothing asserted against
+both = Thesis(0.7, 0.2)       # mu=0.7, lam=0.2 — each degree given verbatim
+```
+
+The bool `False` and the float `0.0` therefore diverge, and the divergence is the point: `Thesis(False)` denies the proposition (`mu=0.0, lam=1.0`), while `Thesis(0.0)` merely declines to support it (`mu=0.0, lam=0.0`) and stays indeterminate. Only the bool carries the classical inference; the float carries only what it states.
 
 # Antithesis
 
@@ -136,7 +147,7 @@ That last disjunction is the substantive claim of the layer. A contradiction cou
 
 ##### The Threshold Is Fixed Here
 
-The four methods call their predicates without a threshold argument, so they always test against the default of `0.5`. At this version `Thesis` and `Antithesis` accept only bools, so every degree in the dialectical layer is `0.0` or `1.0` and no threshold in the open interval could change an answer. Should continuous construction arrive, this becomes a real limitation; work directly with `TruthValue` where a different standard of evidence is required.
+The four methods call their predicates without a threshold argument, so they always test against the default of `0.5`. With continuous construction a degree can now land anywhere in `[0.0, 1.0]`, so a value built from floats near the threshold reads differently under a stricter standard than these methods apply. Where a different standard of evidence is required, work directly with the underlying `TruthValue` and pass the threshold explicitly.
 
 # Chaining Rounds
 

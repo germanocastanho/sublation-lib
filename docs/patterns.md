@@ -50,21 +50,21 @@ Where only some distinctions matter, test for them directly rather than reconstr
 
 # Entering the Dialectical Layer
 
-`Thesis` and `Antithesis` accept bools at this version, so continuous evidence has to be thresholded before it enters. Doing that conversion in one place keeps the standard of evidence explicit and consistent:
+`Thesis` and `Antithesis` accept a bool or a continuous degree. A bool infers its classical complement; a float infers nothing, entering as one degree with the other left at `0.0`. Passing both degrees keeps the graded evidence intact end to end:
 
 ```python
 from sublation import Antithesis, Synthesis, Thesis
 
-def round_from(evidence_for, evidence_against, threshold=0.5):
-    thesis = Thesis(evidence_for >= threshold)
-    antithesis = Antithesis(evidence_against >= threshold)
+def round_from(evidence_for, evidence_against):
+    thesis = Thesis(evidence_for)
+    antithesis = Antithesis(evidence_against)
     return Synthesis(thesis, antithesis)
 
 round_from(0.9, 0.8).contradiction()    # True
 round_from(0.2, 0.1).sublation()        # False — not enough either way
 ```
 
-The degrees are quantized at the boundary, and the intermediate certainty is not recoverable afterwards: `0.9` and `0.51` enter as the same thesis. Where that gradation carries information, stay in `TruthValue` and apply the predicates directly — the dialectical vocabulary is a reading of the value, and nothing is lost by asking the value itself. Continuous construction on these classes is an open item in `TODO.md`.
+`Synthesis` projects `mu` from the thesis and `lam` from the antithesis, so feeding each side its own continuous degree carries the gradation all the way through, and `0.9` and `0.51` no longer collapse to the same thesis. Only thresholding — the bool path, or `evidence >= threshold` at the boundary — quantizes the degrees; where that gradation carries information, keep the floats. The dialectical vocabulary remains a reading of the value, so `TruthValue` and its predicates are always available directly.
 
 # Leaving the System
 
