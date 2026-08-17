@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.1] - 2026-08-17
+
+### Fixed
+
+- README install steps no longer reference the removed `requirements.txt`, and prerequisites now note the package has no runtime dependencies. Refreshes the PyPI project description, which is rendered from the README.
+
 ## [0.3.0] - 2026-08-17
 
 ### Added
