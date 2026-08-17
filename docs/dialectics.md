@@ -160,6 +160,6 @@ second = Synthesis(first.as_thesis(), Antithesis(True))
 second.contradiction()   # True — the new antithesis contests the position
 ```
 
-`as_thesis` reconstructs from the thresholded `thesis` and `antithesis` bools, passing both explicitly so the inferred complement never intervenes. The resulting thesis carries the same degrees as the synthesis it came from, at all four corners; re-positing changes the role a value plays, never the value itself.
+`as_thesis` reconstructs from the synthesis's own `mu` and `lam`, passing both degrees explicitly so the inferred complement never intervenes and no thresholding occurs. The resulting thesis carries the exact degrees of the synthesis it came from — the four corners as before, and now any interior value as well, so intermediate certainty survives the chaining. Re-positing changes the role a value plays, never the value itself.
 
 Two corners are consequently stable under repetition. A contradictory synthesis re-posited against an antithesis that contests it stays contradictory, and an indeterminate one met with nothing new stays indeterminate. Movement requires a new antithesis bringing evidence the previous round did not have — the library supplies the structure of the rounds, not their content.

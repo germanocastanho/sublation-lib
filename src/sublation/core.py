@@ -93,8 +93,8 @@ class Synthesis(Dialectical):
 
     def as_thesis(self) -> Thesis:
         """
-        The synthesys generates a new Thesis for the next round of dialectical evaluation. The new thesis will have a new antithesis, which will be the negation of this synthesis. At the end of the next round, the new thesis will be evaluated against its antithesis etc.
+        Re-posits this synthesis as the thesis of the next round. Both degrees are passed explicitly, so the new thesis carries the synthesis's exact `mu`/`lam` rather than a thresholded bool — intermediate certainty survives the chaining. The next round evaluates it against a fresh antithesis.
         """
 
-        next_round = Thesis(thesis=self.thesis, antithesis=self.antithesis)
+        next_round = Thesis(thesis=self.value.mu, antithesis=self.value.lam)
         return next_round

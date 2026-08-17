@@ -13,7 +13,7 @@
 - [x] Migrate from plain bool to a Belnap/Eτ-style `TruthValue` (`sublation.truths`)
 - [ ] Decide whether `Synthesis` should offer an alternate constructor using `TruthValue.accumulate()` — deferred after finding it produces a surprising contradiction from two "quiet" (`False`, `False`) inputs, due to the default-inferred complement logic in `Thesis`/`Antithesis`
 - [x] Expose continuous `mu`/`lam` construction on `Thesis`/`Antithesis` (currently bool-only) once the sorites test below actually needs it
-- [ ] `as_thesis()` currently round-trips through bool, losing any intermediate certainty — revisit once continuous input exists
+- [x] `as_thesis()` currently round-trips through bool, losing any intermediate certainty — revisit once continuous input exists
 
 ## Validation
 
