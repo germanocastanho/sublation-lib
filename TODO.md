@@ -35,5 +35,6 @@
 - [x] Decide supported Python range — 3.12–3.14
 - [x] Green CI on 3.12–3.14
 - [x] Publish 0.1.0 to PyPI (2026-07-17) via `uv build` + `uv publish`
+- [x] Publish 0.3.0 to PyPI (2026-08-17) via `uv build` + `uv publish`
 - [x] Bump version for the next development cycle (`0.2.0`, given the observable `negation()` behavior change)
 - [ ] Split `operators.py` out of `truths.py` once the truth-value domain grows further
