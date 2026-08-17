@@ -28,7 +28,7 @@
 
 ## Tooling
 
-- [ ] Migrate the project to `uv init --bare` (pyproject.toml, replacing `setup.py`/`setup.cfg`/`requirements.txt`) — own isolated commit, after this round lands
+- [x] Migrate the project to `uv init --bare` (pyproject.toml, replacing `setup.py`/`setup.cfg`/`requirements.txt`) — own isolated commit, after this round lands
 
 ## Release
 

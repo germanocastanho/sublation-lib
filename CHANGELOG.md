@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - `Synthesis.as_thesis()` now re-posits from the synthesis's raw `mu`/`lam` instead of the thresholded bools, so intermediate certainty survives a chained round instead of collapsing to a corner.
+- Packaging migrated to a single `pyproject.toml` (setuptools backend), replacing `setup.py`, `setup.cfg`, and the `requirements.txt` environment freeze.
 
 ## [0.2.0] - 2026-08-05
 
