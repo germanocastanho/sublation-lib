@@ -11,7 +11,7 @@
 - [x] Resolve the dead `self.synthesis = None` attribute on `Thesis`/`Antithesis` (removed)
 - [x] Implement a real rule for `sublation()`, grounded in `TruthValue.is_indeterminate()`
 - [x] Migrate from plain bool to a Belnap/Eτ-style `TruthValue` (`sublation.truths`)
-- [ ] Decide whether `Synthesis` should offer an alternate constructor using `TruthValue.accumulate()` — deferred after finding it produces a surprising contradiction from two "quiet" (`False`, `False`) inputs, due to the default-inferred complement logic in `Thesis`/`Antithesis`
+- [x] Decide whether `Synthesis` should offer an alternate constructor using `TruthValue.accumulate()` — **no**: projection (thesis gives `mu`, antithesis gives `lam`) avoids the spurious contradiction from two "quiet" inputs that `accumulate` produces via the default-inferred complement; explicit pooling stays available on `TruthValue.accumulate()`. Rationale documented in `docs/dialectics.md` ("Why Not Accumulate")
 - [x] Expose continuous `mu`/`lam` construction on `Thesis`/`Antithesis` (currently bool-only) once the sorites test below actually needs it
 - [x] `as_thesis()` currently round-trips through bool, losing any intermediate certainty — revisit once continuous input exists
 
