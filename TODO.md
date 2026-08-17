@@ -18,7 +18,7 @@
 ## Validation
 
 - [x] Validate against classical paradoxes (liar, sorites) and against Hegel's own Being/Nothing/Becoming triad — sorites specifically blocked on continuous `mu`/`lam` input, see above
-- [ ] Add property-based tests (e.g. Hypothesis) to check invariants across random thesis/antithesis combinations, not just the hand-picked cases in `test_core.py`
+- [x] Add property-based tests (e.g. Hypothesis) to check invariants across random thesis/antithesis combinations, not just the hand-picked cases in `test_core.py`
 
 ## Docs
 
