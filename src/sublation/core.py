@@ -45,15 +45,16 @@ class Dialectical:
 
 class Thesis(Dialectical):
     """
-    Thesis: a proposition asserted as posited. By default, asserting the thesis implies denying its antithesis, but that inference can be overridden by passing antithesis explicitly.
+    Thesis: a proposition asserted as posited. A bool thesis infers its complement (asserting the thesis denies its antithesis), a continuous degree does not (it asserts nothing against). Either inference can be overridden by passing antithesis explicitly.
     """
 
     def __init__(
         self,
-        thesis: bool = True,
-        antithesis: bool | None = None,
+        thesis: bool | float = True,
+        antithesis: bool | float | None = None,
     ) -> None:
-        antithesis = (not thesis) if antithesis is None else antithesis
+        if antithesis is None:
+            antithesis = (not thesis) if isinstance(thesis, bool) else 0.0
 
         self.value = TruthValue(mu=float(thesis), lam=float(antithesis))
         self.thesis = self.value.mu >= THRESHOLD
@@ -62,15 +63,16 @@ class Thesis(Dialectical):
 
 class Antithesis(Dialectical):
     """
-    Antithesis: a proposition asserted as the negation of a thesis. By default, asserting the antithesis implies denying the thesis, but that inference can be overridden by passing thesis explicitly.
+    Antithesis: a proposition asserted as the negation of a thesis. A bool antithesis infers its complement (asserting the antithesis denies the thesis), a continuous degree does not (it asserts nothing for). Either inference can be overridden by passing thesis explicitly.
     """
 
     def __init__(
         self,
-        antithesis: bool = False,
-        thesis: bool | None = None,
+        antithesis: bool | float = False,
+        thesis: bool | float | None = None,
     ) -> None:
-        thesis = (not antithesis) if thesis is None else thesis
+        if thesis is None:
+            thesis = (not antithesis) if isinstance(antithesis, bool) else 0.0
 
         self.value = TruthValue(mu=float(thesis), lam=float(antithesis))
         self.thesis = self.value.mu >= THRESHOLD

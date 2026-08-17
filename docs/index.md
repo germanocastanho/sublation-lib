@@ -73,4 +73,4 @@ The `Dialectical` base class in `sublation.core` is likewise importable, but it 
 
 ##### On Version Stability
 
-This documentation describes version 0.2.0, whose development status is Alpha. The four-valued semantics of `TruthValue` are stable; the bool-only constructors of `Thesis` and `Antithesis` are not, and are expected to accept continuous degrees in a later version. Code that constructs `TruthValue` directly is therefore on firmer ground than code that depends on the inferred-complement behavior described in [Dialectics](dialectics.md).
+This documentation describes version 0.2.0, whose development status is Alpha. The four-valued semantics of `TruthValue` are stable. `Thesis` and `Antithesis` now accept continuous degrees as well as bools, and the inferred complement is confined to the bool path — code that constructs `TruthValue` directly, or that passes both degrees explicitly, is on firmer ground than code that depends on the inferred-complement behavior described in [Dialectics](dialectics.md).

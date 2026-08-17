@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Continuous construction on `Thesis` and `Antithesis`: both constructors now accept a float degree in `[0.0, 1.0]` alongside a bool, reaching the interior of the evidential square. A bool still infers its classical complement; a float infers none, so `Thesis(0.0)` is indeterminate where `Thesis(False)` is denial.
+
 ## [0.2.0] - 2026-08-05
 
 ### Added
