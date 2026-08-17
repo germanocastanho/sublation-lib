@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Continuous construction on `Thesis` and `Antithesis`: both constructors now accept a float degree in `[0.0, 1.0]` alongside a bool, reaching the interior of the evidential square. A bool still infers its classical complement; a float infers none, so `Thesis(0.0)` is indeterminate where `Thesis(False)` is denial.
 - Validation suite (`tests/test_validation.py`) anchoring the semantics to the liar paradox (stable contradiction, `invert` fixed point), the sorites (a continuous gradient passing through indeterminacy with no sharp cutoff), and Hegel's Being/Nothing/Becoming triad.
+- Property-based tests (`tests/test_properties.py`, `hypothesis` dev dependency) checking the bilattice invariants over random values: idempotence, commutativity and associativity of the four combining operations, involution and corner fixed points of `invert`, De Morgan, and `invert` commuting with the knowledge-order operations.
 
 ### Changed
 
