@@ -1,6 +1,6 @@
 # 🧠 Sublation
 
-This library formalizes dialectical logic as a case of four-valued reasoning (true / false / contradictory / indeterminate), grounded in Belnap–Dunn logic (FDE) and the bilattice structure behind paraconsistent annotated logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way. Try it out!
+This library formalizes dialectical logic as a case of four-valued reasoning (true / false / contradictory / indeterminate), grounded in Belnap–Dunn logic (FDE) and the bilattice structure behind paraconsistent annotated logics such as Eτ. Inspired by Hegel's dialectical logic, it provides a framework for reasoning in a rigorous way.
 
 # ✨ Main Features
 
@@ -12,10 +12,9 @@ This library formalizes dialectical logic as a case of four-valued reasoning (tr
 # ✅ Prerequisites
 
 - Python 3.12+ installed on your machine
-- Astral uv package manager (optional)
 - Dependencies listed in `requirements.txt`
 
-# ⚙️ Installation
+# ⚙️ Local Installation
 
 ### For regular use:
 
@@ -58,7 +57,7 @@ pip install -e ".[dev]"
 pytest
 ```
 
-# 🚀 Quick Start
+# 🚀 Getting Started
 
 ```python
 from sublation import Thesis, Antithesis, Synthesis
