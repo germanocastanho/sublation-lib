@@ -12,7 +12,7 @@ Inspired by Hegel's dialectical logic, this library formalizes dialectical logic
 # ✅ Prerequisites
 
 - Python 3.12+ installed on your machine
-- Dependencies listed in `requirements.txt`
+- No runtime dependencies; dev extras declared in `pyproject.toml`
 
 # ⚙️ Local Installation
 
@@ -26,9 +26,6 @@ cd sublation-lib/
 # Create a venv (optional)
 python3 -m venv .venv
 source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
 
 # Install sublation package
 pip install -e .
@@ -47,10 +44,7 @@ cd sublation-lib/
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Install sublation package
+# Install sublation package with dev extras
 pip install -e ".[dev]"
 
 # Run full test suite
