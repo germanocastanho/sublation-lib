@@ -56,3 +56,9 @@ def test_synthesis_chains_into_new_thesis():
     assert isinstance(t2, Thesis)
     assert t2.thesis == s1.thesis
     assert t2.antithesis == s1.antithesis
+
+
+def test_as_thesis_preserves_continuous_degrees():
+    s = Synthesis(Thesis(0.7), Antithesis(0.2))
+    t = s.as_thesis()
+    assert (t.value.mu, t.value.lam) == (0.7, 0.2)
