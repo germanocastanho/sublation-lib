@@ -76,3 +76,13 @@ def test_repr_shows_both_degrees():
     assert "mu=0.8" in rendered
     assert "lam=0.3" in rendered
     assert "TruthValue" in rendered
+
+
+def test_degrees_are_read_only_after_construction():
+    value = TruthValue(mu=0.9, lam=0.1)
+    assert value.mu == 0.9
+    assert value.lam == 0.1
+    with pytest.raises(AttributeError):
+        value.mu = 5.0
+    with pytest.raises(AttributeError):
+        value.lam = 5.0

@@ -24,8 +24,18 @@ class TruthValue:
         if not (0 <= lam <= 1):
             raise ValueError(f"lam must be within [0.0, 1.0], got {lam}")
 
-        self.mu = mu
-        self.lam = lam
+        self._mu = mu
+        self._lam = lam
+
+    @property
+    def mu(self) -> float:
+        """Degree of evidence in favor."""
+        return self._mu
+
+    @property
+    def lam(self) -> float:
+        """Degree of evidence against."""
+        return self._lam
 
     def invert(self) -> "TruthValue":
         """
