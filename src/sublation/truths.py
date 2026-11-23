@@ -74,6 +74,13 @@ class TruthValue:
 
         return self.invert().disjunction(other)
 
+    def equivalence(self, other: "TruthValue") -> "TruthValue":
+        """
+        Logical equivalence in FDE: (A → B) ∧ (B → A).
+        """
+
+        return self.implication(other).conjunction(other.implication(self))
+
     def consensus(self, other: "TruthValue") -> "TruthValue":
         """
         Keeps only the evidence both operands agree on (min mu, min lam) - a skeptical combination where anything one side claims but the other doesn't corroborate gets dropped.

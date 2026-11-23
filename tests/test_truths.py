@@ -100,3 +100,15 @@ def test_implication_reflexive_is_not_necessarily_true():
     result = value.implication(value)
     assert result.mu == 0.9
     assert result.lam == 0.1
+
+
+def test_equivalence_is_conjunction_of_both_implications():
+    result = TruthValue(1.0, 0.0).equivalence(TruthValue(0.0, 1.0))
+    assert result.mu == 0.0
+    assert result.lam == 1.0
+
+
+def test_equivalence_is_symmetric():
+    a = TruthValue(0.9, 0.1)
+    b = TruthValue(0.3, 0.6)
+    assert a.equivalence(b) == b.equivalence(a)
