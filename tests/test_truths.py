@@ -86,3 +86,17 @@ def test_degrees_are_read_only_after_construction():
         value.mu = 5.0
     with pytest.raises(AttributeError):
         value.lam = 5.0
+
+
+def test_implication_is_not_a_or_b():
+    result = TruthValue(0.9, 0.1).implication(TruthValue(0.3, 0.6))
+    assert result.mu == 0.3
+    assert result.lam == 0.6
+
+
+def test_implication_reflexive_is_not_necessarily_true():
+    # In FDE, A -> A need not be (1, 0); it keeps its own degrees.
+    value = TruthValue(0.9, 0.1)
+    result = value.implication(value)
+    assert result.mu == 0.9
+    assert result.lam == 0.1

@@ -67,6 +67,13 @@ class TruthValue:
         )
         return truth_value
 
+    def implication(self, other: "TruthValue") -> "TruthValue":
+        """
+        Material implication in FDE: ¬A ∨ B, i.e. disjunction(self.invert(), other).
+        """
+
+        return self.invert().disjunction(other)
+
     def consensus(self, other: "TruthValue") -> "TruthValue":
         """
         Keeps only the evidence both operands agree on (min mu, min lam) - a skeptical combination where anything one side claims but the other doesn't corroborate gets dropped.
