@@ -60,3 +60,19 @@ def test_rejects_out_of_range_evidence():
         TruthValue(mu=1.5, lam=0.0)
     with pytest.raises(ValueError):
         TruthValue(mu=0.0, lam=-0.1)
+
+
+def test_eq_compares_evidence_not_identity():
+    assert TruthValue(1.0, 0.0) == TruthValue(1.0, 0.0)
+    assert TruthValue(0.0, 1.0) == TruthValue(0.0, 1.0)
+    assert TruthValue(1.0, 0.0) != TruthValue(0.0, 1.0)
+    assert TruthValue(0.7, 0.2) == TruthValue(0.7, 0.2)
+    assert TruthValue(0.7, 0.2) != TruthValue(0.7, 0.3)
+
+
+def test_repr_shows_both_degrees():
+    value = TruthValue(mu=0.8, lam=0.3)
+    rendered = repr(value)
+    assert "mu=0.8" in rendered
+    assert "lam=0.3" in rendered
+    assert "TruthValue" in rendered

@@ -87,6 +87,22 @@ class TruthValue:
         conversion = self.mu > self.lam
         return conversion
 
+    def __eq__(self, other: object) -> bool:
+        """
+        Equality of evidence: two values are equal when both degrees match.
+        """
+
+        if not isinstance(other, TruthValue):
+            return NotImplemented
+        return (self.mu, self.lam) == (other.mu, other.lam)
+
+    def __repr__(self) -> str:
+        """
+        A representation that shows both degrees, useful for debugging and logging.
+        """
+
+        return f"TruthValue(mu={self.mu!r}, lam={self.lam!r})"
+
     def is_true(self, threshold: float = THRESHOLD) -> bool:
         """
         Reports whether this value sits in the "true" corner: evidence FOR has crossed the threshold and evidence AGAINST has not.
