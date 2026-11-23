@@ -62,3 +62,25 @@ def test_as_thesis_preserves_continuous_degrees():
     s = Synthesis(Thesis(0.7), Antithesis(0.2))
     t = s.as_thesis()
     assert (t.value.mu, t.value.lam) == (0.7, 0.2)
+
+
+def test_dialectical_methods_accept_threshold():
+    # becoming: is_true on the underlying value
+    s = Synthesis(Thesis(0.6), Antithesis(0.2))
+    assert s.becoming() is True
+    assert s.becoming(threshold=0.8) is False
+
+    # contradiction: is_contradictory on the underlying value
+    s = Synthesis(Thesis(0.8), Antithesis(0.8))
+    assert s.contradiction() is True
+    assert s.contradiction(threshold=0.9) is False
+
+    # sublation: not is_indeterminate on the underlying value
+    s = Synthesis(Thesis(0.6), Antithesis(0.2))
+    assert s.sublation() is True
+    assert s.sublation(threshold=0.8) is False
+
+    # negation: invert().is_true() on the underlying value
+    s = Synthesis(Thesis(0.2), Antithesis(0.6))
+    assert s.negation() is True
+    assert s.negation(threshold=0.8) is False

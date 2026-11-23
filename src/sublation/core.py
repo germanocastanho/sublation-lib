@@ -10,36 +10,36 @@ class Dialectical:
     thesis: bool
     antithesis: bool
 
-    def negation(self) -> bool:
+    def negation(self, threshold: float = THRESHOLD) -> bool:
         """
         Whether the negation of this value holds cleanly true. Inverts the `mu` and `lam` of the underlying TruthValue and checks whether that inverted value is true.
         """
 
-        negation = self.value.invert().is_true()
+        negation = self.value.invert().is_true(threshold=threshold)
         return negation
 
-    def contradiction(self) -> bool:
+    def contradiction(self, threshold: float = THRESHOLD) -> bool:
         """
         Whether evidence for and against are both strong at once. State that a plain bool can never represent - True and False at the same time -, but that TruthValue can.
         """
 
-        contradiction = self.value.is_contradictory()
+        contradiction = self.value.is_contradictory(threshold=threshold)
         return contradiction
 
-    def becoming(self) -> bool:
+    def becoming(self, threshold: float = THRESHOLD) -> bool:
         """
         Whether this value is a clean, uncontested affirmation. State that a plain bool can represent, but that TruthValue can also represent. This method is just a convenience for when you want to check for the simplest case.
         """
 
-        becoming = self.value.is_true()
+        becoming = self.value.is_true(threshold=threshold)
         return becoming
 
-    def sublation(self) -> bool:
+    def sublation(self, threshold: float = THRESHOLD) -> bool:
         """
         Whether this value has been determined at all, either way. Corresponds to the Hegelian notion of `Aufhebung`. In this case, it means that the TruthValue has crossed the threshold in either direction, so it is no longer indeterminate and has been "sublated" (Aufgehoben).
         """
 
-        sublation = not self.value.is_indeterminate()
+        sublation = not self.value.is_indeterminate(threshold=threshold)
         return sublation
 
 
