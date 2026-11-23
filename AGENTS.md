@@ -35,7 +35,7 @@ Don't improve adjacent code, comments, or formatting. Match the existing style. 
 - `PascalCase` for classes, dataclasses, exceptions
 - One concern per diff; one responsibility per function
 - Prefer functions over classes unless necessary
-- Avoid astronomic lines, max 80 chars per line
+- Avoid astronomic lines, max 88 chars per line
 - Secrets in `.env` — never hardcode them
 - PEP 8 (enforced by ruff); explicit over implicit
 - Refactor every code smells and anti-patterns
