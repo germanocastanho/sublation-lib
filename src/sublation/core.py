@@ -1,9 +1,17 @@
+"""
+Copyleft 2026, Germano Castanho
+Licensed under the MIT License
+"""
+
 from .truths import THRESHOLD, TruthValue
 
 
 class Dialectical:
     """
-    Shared behavior for Thesis, Antithesis, and Synthesis. Each subclass is only responsible for building self.value, self.thesis, and self.antithesis in its own __init__ — the four methods below read those fields the same way regardless of which subclass created them.
+    Shared behavior for Thesis, Antithesis, and Synthesis. Each subclass only
+    builds self.value, self.thesis, and self.antithesis in its own __init__;
+    the four inherited methods read those fields identically regardless of
+    which subclass produced the instance.
     """
 
     value: TruthValue
@@ -12,7 +20,9 @@ class Dialectical:
 
     def negation(self, threshold: float = THRESHOLD) -> bool:
         """
-        Whether the negation of this value holds cleanly true. Inverts the `mu` and `lam` of the underlying TruthValue and checks whether that inverted value is true.
+        Whether the negation of this value holds cleanly true — inverts mu and
+        lam and checks the result. Equivalent to asking whether the original is
+        false; at contradictory and indeterminate corners it is a fixed point.
         """
 
         negation = self.value.invert().is_true(threshold=threshold)
@@ -20,7 +30,11 @@ class Dialectical:
 
     def contradiction(self, threshold: float = THRESHOLD) -> bool:
         """
-        Whether evidence for and against are both strong at once. State that a plain bool can never represent - True and False at the same time -, but that TruthValue can.
+        Whether evidence for and against are both strong at once. A plain bool
+        can never represent this state — it forces True or False — but
+        TruthValue can: both degrees crossing the threshold is contradiction,
+        the state that motivates the whole library and the one a dialectical
+        round must be able to name without collapsing.
         """
 
         contradiction = self.value.is_contradictory(threshold=threshold)
@@ -28,7 +42,11 @@ class Dialectical:
 
     def becoming(self, threshold: float = THRESHOLD) -> bool:
         """
-        Whether this value is a clean, uncontested affirmation. State that a plain bool can represent, but that TruthValue can also represent. This method is just a convenience for when you want to check for the simplest case.
+        Whether this value is a clean, uncontested affirmation — evidence FOR
+        has crossed the threshold and evidence AGAINST has not. A plain bool
+        can represent this, and so can TruthValue; the method exists as a
+        convenience for the simplest case, the one classical logic mistakes
+        for the only case.
         """
 
         becoming = self.value.is_true(threshold=threshold)
@@ -36,7 +54,9 @@ class Dialectical:
 
     def sublation(self, threshold: float = THRESHOLD) -> bool:
         """
-        Whether this value has been determined at all, either way. Corresponds to the Hegelian notion of `Aufhebung`. In this case, it means that the TruthValue has crossed the threshold in either direction, so it is no longer indeterminate and has been "sublated" (Aufgehoben).
+        Whether this value has been determined at all, either way — Hegelian
+        Aufhebung: the TruthValue has crossed the threshold in either
+        direction, so it is no longer indeterminate and has been sublated.
         """
 
         sublation = not self.value.is_indeterminate(threshold=threshold)
@@ -45,7 +65,9 @@ class Dialectical:
 
 class Thesis(Dialectical):
     """
-    Thesis: a proposition asserted as posited. A bool thesis infers its complement (asserting the thesis denies its antithesis), a continuous degree does not (it asserts nothing against). Either inference can be overridden by passing antithesis explicitly.
+    A proposition asserted as posited. A bool thesis infers its classical
+    complement; a continuous degree infers nothing. Either inference can be
+    overridden by passing antithesis explicitly.
     """
 
     def __init__(
@@ -53,6 +75,13 @@ class Thesis(Dialectical):
         thesis: bool | float = True,
         antithesis: bool | float | None = None,
     ) -> None:
+        """Builds a thesis from a proposition and its negation degree. A bool
+        infers the classical complement (lam becomes 1.0 when thesis is False,
+        0.0 when True). A float infers nothing — it asserts only what it
+        states and leaves lam at 0.0 unless overridden. Passing antithesis
+        explicitly breaks the inference, reaching the non-classical corners.
+        """
+
         if antithesis is None:
             antithesis = (not thesis) if isinstance(thesis, bool) else 0.0
 
@@ -63,7 +92,9 @@ class Thesis(Dialectical):
 
 class Antithesis(Dialectical):
     """
-    Antithesis: a proposition asserted as the negation of a thesis. A bool antithesis infers its complement (asserting the antithesis denies the thesis), a continuous degree does not (it asserts nothing for). Either inference can be overridden by passing thesis explicitly.
+    A proposition asserted as the negation of a thesis. A bool antithesis
+    infers its classical complement; a continuous degree infers nothing.
+    Either inference can be overridden by passing thesis explicitly.
     """
 
     def __init__(
@@ -71,6 +102,13 @@ class Antithesis(Dialectical):
         antithesis: bool | float = False,
         thesis: bool | float | None = None,
     ) -> None:
+        """Builds an antithesis from a negated proposition and its affirmation
+        degree. Mirrors Thesis in the opposite direction: a bool infers its
+        classical complement on the thesis side; a float infers nothing,
+        leaving mu at 0.0 unless overridden. Passing thesis explicitly breaks
+        the inference.
+        """
+
         if thesis is None:
             thesis = (not antithesis) if isinstance(antithesis, bool) else 0.0
 
@@ -81,10 +119,20 @@ class Antithesis(Dialectical):
 
 class Synthesis(Dialectical):
     """
-    Synthesis: combines a Thesis and an Antithesis - it trusts the thesis only on its own claim (mu) and the antithesis only on its own claim (lam), rather than pooling everything either side happens to carry.
+    Combines a Thesis and an Antithesis, trusting the thesis only on its own
+    claim (mu) and the antithesis only on its own claim (lam), rather than
+    pooling everything either side carries.
     """
 
     def __init__(self, thesis: Thesis, antithesis: Antithesis) -> None:
+        """
+        Combines a thesis and an antithesis, taking mu from the thesis and
+        lam from the antithesis, discarding each side's other degree. Each
+        side is trusted only about its own claim — the inferred complement is
+        invisible here. Pooling both sides with `accumulate` would manufacture
+        spurious contradiction; projection stays the rule.
+        """
+
         self.value = TruthValue(mu=thesis.value.mu, lam=antithesis.value.lam)
 
         self.thesis = self.value.mu >= THRESHOLD
@@ -93,7 +141,10 @@ class Synthesis(Dialectical):
 
     def as_thesis(self) -> Thesis:
         """
-        Re-posits this synthesis as the thesis of the next round. Both degrees are passed explicitly, so the new thesis carries the synthesis's exact `mu`/`lam` rather than a thresholded bool — intermediate certainty survives the chaining. The next round evaluates it against a fresh antithesis.
+        Re-posits this synthesis as the thesis of the next round. Both degrees
+        are passed explicitly, so the new thesis carries the exact mu/lam
+        rather than a thresholded bool — intermediate certainty survives the
+        chaining into a fresh antithesis.
         """
 
         next_round = Thesis(thesis=self.value.mu, antithesis=self.value.lam)
@@ -102,8 +153,9 @@ class Synthesis(Dialectical):
     @classmethod
     def from_values(cls, mu: float, lam: float) -> "Synthesis":
         """
-        Builds a Synthesis directly from evidence degrees, without fabricating disposable Thesis/Antithesis instances.
-        Equivalent to Synthesis(Thesis(mu), Antithesis(lam)).
+        Builds a Synthesis directly from evidence degrees, without fabricating
+        disposable Thesis/Antithesis instances. Equivalent to
+        Synthesis(Thesis(mu), Antithesis(lam)).
         """
 
         return cls(Thesis(mu), Antithesis(lam))
