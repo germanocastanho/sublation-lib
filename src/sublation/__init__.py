@@ -1,4 +1,9 @@
-from . import operators  # noqa: F401  attaches bilattice operators to TruthValue
+"""
+Copyleft 2026, Germano Castanho
+Licensed under the MIT License
+"""
+
+from . import operators  # noqa: F401
 from .core import Antithesis, Synthesis, Thesis
 from .truths import TruthValue
 
