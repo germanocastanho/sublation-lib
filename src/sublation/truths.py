@@ -45,64 +45,6 @@ class TruthValue:
         truth_value = TruthValue(self.lam, self.mu)
         return truth_value
 
-    def conjunction(self, other: "TruthValue") -> "TruthValue":
-        """
-        Combines two values as logical AND: only as favorably evidenced as the weaker half (min of the two mu), and only as free of doubt as the most doubted half (max of the two lam).
-        """
-
-        truth_value = TruthValue(
-            min(self.mu, other.mu),
-            max(self.lam, other.lam),
-        )
-        return truth_value
-
-    def disjunction(self, other: "TruthValue") -> "TruthValue":
-        """
-        The mirror of conjunction: OR takes the stronger mu and the milder lam, since a disjunction only needs one side to hold up.
-        """
-
-        truth_value = TruthValue(
-            max(self.mu, other.mu),
-            min(self.lam, other.lam),
-        )
-        return truth_value
-
-    def implication(self, other: "TruthValue") -> "TruthValue":
-        """
-        Material implication in FDE: ¬A ∨ B, i.e. disjunction(self.invert(), other).
-        """
-
-        return self.invert().disjunction(other)
-
-    def equivalence(self, other: "TruthValue") -> "TruthValue":
-        """
-        Logical equivalence in FDE: (A → B) ∧ (B → A).
-        """
-
-        return self.implication(other).conjunction(other.implication(self))
-
-    def consensus(self, other: "TruthValue") -> "TruthValue":
-        """
-        Keeps only the evidence both operands agree on (min mu, min lam) - a skeptical combination where anything one side claims but the other doesn't corroborate gets dropped.
-        """
-
-        truth_value = TruthValue(
-            min(self.mu, other.mu),
-            min(self.lam, other.lam),
-        )
-        return truth_value
-
-    def accumulate(self, other: "TruthValue") -> "TruthValue":
-        """
-        Pools all evidence from both operands, FOR and AGAINST alike (max mu, max lam), without discarding anything either side claims.
-        """
-
-        truth_value = TruthValue(
-            max(self.mu, other.mu),
-            max(self.lam, other.lam),
-        )
-        return truth_value
-
     def to_bool(self) -> bool:
         """
         Collapses this value to a plain bool by checking which evidence degree is larger — a relative comparison, **not** the same question as `is_true ()` below.

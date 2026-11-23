@@ -1,3 +1,4 @@
+from . import operators  # noqa: F401  attaches bilattice operators to TruthValue
 from .core import Antithesis, Synthesis, Thesis
 from .truths import TruthValue
 
