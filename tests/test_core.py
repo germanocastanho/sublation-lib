@@ -84,3 +84,12 @@ def test_dialectical_methods_accept_threshold():
     s = Synthesis(Thesis(0.2), Antithesis(0.6))
     assert s.negation() is True
     assert s.negation(threshold=0.8) is False
+
+
+def test_synthesis_from_values_matches_thesis_antithesis_flow():
+    s = Synthesis.from_values(0.7, 0.2)
+    assert s.value.mu == 0.7
+    assert s.value.lam == 0.2
+
+    reference = Synthesis(Thesis(0.7), Antithesis(0.2))
+    assert (s.value.mu, s.value.lam) == (reference.value.mu, reference.value.lam)

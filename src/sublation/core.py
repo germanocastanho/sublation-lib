@@ -98,3 +98,12 @@ class Synthesis(Dialectical):
 
         next_round = Thesis(thesis=self.value.mu, antithesis=self.value.lam)
         return next_round
+
+    @classmethod
+    def from_values(cls, mu: float, lam: float) -> "Synthesis":
+        """
+        Builds a Synthesis directly from evidence degrees, without fabricating disposable Thesis/Antithesis instances.
+        Equivalent to Synthesis(Thesis(mu), Antithesis(lam)).
+        """
+
+        return cls(Thesis(mu), Antithesis(lam))
