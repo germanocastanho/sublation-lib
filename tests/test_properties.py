@@ -1,10 +1,3 @@
-"""
-Property-based invariants for TruthValue. The four combining operations are
-defined by min/max alone, so results are exact degrees of the inputs and can
-be compared without float tolerance. Values are compared as (mu, lam) tuples,
-since TruthValue defines no __eq__.
-"""
-
 from hypothesis import given
 from hypothesis import strategies as st
 
