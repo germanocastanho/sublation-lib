@@ -127,6 +127,15 @@ class TruthValue:
 
         return f"TruthValue(mu={self.mu!r}, lam={self.lam!r})"
 
+    @classmethod
+    def from_bool(cls, value: bool) -> "TruthValue":
+        """
+        Lifts a plain bool to a TruthValue on one of the two classical corners.
+        Alias for the module-level `truth_value_from_bool` helper.
+        """
+
+        return truth_value_from_bool(value)
+
     def is_true(self, threshold: float = THRESHOLD) -> bool:
         """
         Reports whether this value sits in the "true" corner: evidence FOR has crossed the threshold and evidence AGAINST has not.

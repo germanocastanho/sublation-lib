@@ -112,3 +112,8 @@ def test_equivalence_is_symmetric():
     a = TruthValue(0.9, 0.1)
     b = TruthValue(0.3, 0.6)
     assert a.equivalence(b) == b.equivalence(a)
+
+
+def test_from_bool_lifts_to_classical_corners():
+    assert TruthValue.from_bool(True) == TruthValue(1.0, 0.0)
+    assert TruthValue.from_bool(False) == TruthValue(0.0, 1.0)
