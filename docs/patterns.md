@@ -82,33 +82,33 @@ Whether an unexamined proposition leaves the system as `False`, or a contradicto
 
 # Caveats
 
-### Values Are Not Frozen
+### Values Are Read-Only After Construction
 
-`mu` and `lam` are ordinary attributes, and the constructor is the only place they are validated. Assigning to them afterwards bypasses the range check entirely:
+`mu` and `lam` are read-only properties, and the constructor validates both degrees at build time. Assigning to either afterwards raises `AttributeError`:
 
 ```python
 value = TruthValue(0.9, 0.1)
-value.lam = 5.0           # accepted; no error is raised
+value.lam = 5.0           # AttributeError: can't set attribute
 ```
 
-Treat values as immutable once built. Every operation returns a new instance, so there is never a reason to assign to a degree, and doing so can produce a value the constructor would have rejected.
+Treat values as immutable once built. Every operation returns a new instance, so there is never a reason to assign to a degree.
 
 ### Operations Never Mutate Their Operands
 
 The four combining operations and `invert` all return new values and leave both operands untouched. A value may be folded into several aggregations, or held as a reference point across a computation, without defensive copying.
 
-### There Is No Equality or Representation
+### Equality and Representation
 
-`TruthValue` defines neither `__eq__` nor `__repr__` at this version, so `==` compares identity and printing yields the default object representation. Compare degrees as a tuple, and format explicitly for output:
+`TruthValue` defines `__eq__` and `__repr__`, so `==` compares both degrees and printing shows `TruthValue(mu=..., lam=...)`. Exact evidence match is therefore available directly:
 
 ```python
 a, b = TruthValue(1.0, 0.0), TruthValue(1.0, 0.0)
 
-(a.mu, a.lam) == (b.mu, b.lam)     # True — equality of evidence
-f"mu={a.mu}, lam={a.lam}"          # 'mu=1.0, lam=0.0'
+a == b                              # True — equality of evidence
+repr(a)                             # 'TruthValue(mu=1.0, lam=0.0)'
 ```
 
-This affects tests most directly: assert on the degrees or on the verdicts, never on the values themselves.
+Equality of degrees is exact; equality of verdicts is weaker, since distinct degrees frequently fall in the same quadrant and share a predicate. Compare degrees when you need exact evidence match, and verdicts when you only need the same classification.
 
 ### The Threshold Is Not Global
 

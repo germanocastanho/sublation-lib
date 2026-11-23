@@ -155,19 +155,11 @@ value.is_indeterminate()   # True  — the honest reading
 
 # Comparing Values
 
-`TruthValue` defines neither `__eq__` nor `__repr__` at this version. Two values with identical degrees are therefore unequal under `==`, which compares identity, and printing one yields the default object representation:
+`TruthValue` defines `__eq__` and `__repr__`. Two values are equal when both degrees match, and printing one shows `TruthValue(mu=..., lam=...)`:
 
 ```python
-TruthValue(1.0, 0.0) == TruthValue(1.0, 0.0)  # False
+TruthValue(1.0, 0.0) == TruthValue(1.0, 0.0)  # True
+repr(TruthValue(0.8, 0.3))                     # 'TruthValue(mu=0.8, lam=0.3)'
 ```
 
-Compare the degrees directly, or compare the verdicts, depending on which question is being asked:
-
-```python
-a, b = TruthValue(1.0, 0.0), TruthValue(1.0, 0.0)
-
-(a.mu, a.lam) == (b.mu, b.lam)   # True — same evidence
-a.is_true() == b.is_true()       # True — same verdict
-```
-
-The two are not interchangeable. Distinct degrees frequently yield the same verdict, since each predicate covers a whole quadrant, so equality of verdicts is the weaker claim.
+Equality of degrees is exact; equality of verdicts is weaker, since distinct degrees frequently fall in the same quadrant and share a predicate. Compare degrees when you need exact evidence match, and verdicts when you only need the same classification.

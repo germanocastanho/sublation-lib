@@ -109,7 +109,7 @@ t.value.accumulate(a.value).is_contradictory()   # True — spurious
 Synthesis(t, a).value.is_indeterminate()         # True — the honest reading
 ```
 
-Projection avoids this by never letting an inferred degree cross into the synthesis. An alternative constructor built on `accumulate` remains an open question in `TODO.md`, deferred for exactly this reason.
+Projection avoids this by never letting an inferred degree cross into the synthesis. An alternative constructor built on `accumulate` was considered and rejected for exactly this reason; projection stays the rule, and explicit pooling remains available on `TruthValue.accumulate()`.
 
 ### The Four Corners
 
