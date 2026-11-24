@@ -39,6 +39,7 @@ class TruthValue:
         what keeps contradiction and indeterminacy expressible. Read-only after
         construction.
         """
+
         return self._mu
 
     @property
@@ -50,6 +51,7 @@ class TruthValue:
         what keeps contradiction and indeterminacy expressible. Read-only after
         construction.
         """
+
         return self._lam
 
     def invert(self) -> "TruthValue":
