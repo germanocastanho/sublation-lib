@@ -47,4 +47,4 @@
 - [x] Publish 0.3.1 to PyPI (2026-08-17) via `uv build` + `uv publish`
 - [x] Bump version for the next development cycle (`0.2.0`, given the observable `negation()` behavior change)
 - [x] Split `operators.py` out of `truths.py` once the truth-value domain grows further — done (commit e17a277)
-- [ ] Bump version for the next development cycle (`0.4.0`)
+- [x] Bump version for the next development cycle (`0.4.0`)
