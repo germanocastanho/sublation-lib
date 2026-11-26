@@ -11,20 +11,20 @@ from functools import reduce
 from sublation import TruthValue
 
 reports = [
-    TruthValue(0.9, 0.0),   # a source strongly in favor
-    TruthValue(0.0, 0.7),   # a source against
-    TruthValue(0.6, 0.1),   # a third, moderately in favor
+    TruthValue(0.9, 0.0),  # a source strongly in favor
+    TruthValue(0.0, 0.7),  # a source against
+    TruthValue(0.6, 0.1),  # a third, moderately in favor
 ]
 
-pooled = reduce(TruthValue.accumulate, reports)   # mu=0.9, lam=0.7
-shared = reduce(TruthValue.consensus, reports)    # mu=0.0, lam=0.0
+pooled = reduce(TruthValue.accumulate, reports)  # mu=0.9, lam=0.7
+shared = reduce(TruthValue.consensus, reports)  # mu=0.0, lam=0.0
 ```
 
 The two folds answer different questions about the same testimony, and their disagreement is informative rather than a problem to be settled. `accumulate` reports that the strongest case for and the strongest case against are both substantial — the body of evidence is contradictory. `consensus` reports that nothing survives the demand for unanimous warrant — on what all three sources jointly support, the question is indeterminate. A classical aggregation would have to choose one summary and suppress the other:
 
 ```python
-pooled.is_contradictory()    # True  — taken together, the sources conflict
-shared.is_indeterminate()    # True  — they agree on nothing
+pooled.is_contradictory()  # True  — taken together, the sources conflict
+shared.is_indeterminate()  # True  — they agree on nothing
 ```
 
 ### Order and Repetition Do Not Matter
@@ -55,13 +55,15 @@ Where only some distinctions matter, test for them directly rather than reconstr
 ```python
 from sublation import Antithesis, Synthesis, Thesis
 
+
 def round_from(evidence_for, evidence_against):
     thesis = Thesis(evidence_for)
     antithesis = Antithesis(evidence_against)
     return Synthesis(thesis, antithesis)
 
-round_from(0.9, 0.8).contradiction()    # True
-round_from(0.2, 0.1).sublation()        # False — not enough either way
+
+round_from(0.9, 0.8).contradiction()  # True
+round_from(0.2, 0.1).sublation()  # False — not enough either way
 ```
 
 `Synthesis` projects `mu` from the thesis and `lam` from the antithesis, so feeding each side its own continuous degree carries the gradation all the way through, and `0.9` and `0.51` no longer collapse to the same thesis. Only thresholding — the bool path, or `evidence >= threshold` at the boundary — quantizes the degrees; where that gradation carries information, keep the floats. The dialectical vocabulary remains a reading of the value, so `TruthValue` and its predicates are always available directly.
@@ -73,8 +75,8 @@ At some boundary a plain bool is usually required. `to_bool` produces one from a
 ```python
 value = TruthValue(0.25, 0.0)
 
-value.to_bool()                              # True — thin evidence, still true
-value.is_true()                              # False
+value.to_bool()  # True — thin evidence, still true
+value.is_true()  # False
 value.is_true() or value.is_contradictory()  # False — an explicit policy
 ```
 
@@ -88,7 +90,7 @@ Whether an unexamined proposition leaves the system as `False`, or a contradicto
 
 ```python
 value = TruthValue(0.9, 0.1)
-value.lam = 5.0           # AttributeError: can't set attribute
+value.lam = 5.0  # AttributeError: can't set attribute
 ```
 
 Treat values as immutable once built. Every operation returns a new instance, so there is never a reason to assign to a degree.
@@ -104,8 +106,8 @@ The four combining operations and `invert` all return new values and leave both 
 ```python
 a, b = TruthValue(1.0, 0.0), TruthValue(1.0, 0.0)
 
-a == b                              # True — equality of evidence
-repr(a)                             # 'TruthValue(mu=1.0, lam=0.0)'
+a == b  # True — equality of evidence
+repr(a)  # 'TruthValue(mu=1.0, lam=0.0)'
 ```
 
 Equality of degrees is exact; equality of verdicts is weaker, since distinct degrees frequently fall in the same quadrant and share a predicate. Compare degrees when you need exact evidence match, and verdicts when you only need the same classification.
@@ -116,6 +118,7 @@ Equality of degrees is exact; equality of verdicts is weaker, since distinct deg
 
 ```python
 STRICT = 0.8
+
 
 def settled(value: TruthValue) -> bool:
     return not value.is_indeterminate(STRICT)

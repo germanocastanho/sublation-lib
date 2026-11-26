@@ -1,6 +1,9 @@
 # 🧠 Sublation
 
-Inspired by Hegel's dialectical logic, this library formalizes dialectical logic as a case of four-valued reasoning (true / false / contradictory / indeterminate), grounded in Belnap–Dunn logic (FDE) and the bilattice structure behind paraconsistent annotated logics such as Eτ.
+Inspired by Hegel's dialectical logic, this library formalizes dialectical logic as a
+case of four-valued reasoning (true / false / contradictory / indeterminate), grounded
+in Belnap–Dunn logic (FDE) and the bilattice structure behind paraconsistent annotated
+logics such as Eτ.
 
 # ✨ Main Features
 
@@ -60,9 +63,9 @@ t = Thesis(True)
 a = Antithesis(True)
 s = Synthesis(t, a)
 
-s.contradiction()       # True  — the tension is real and detectable
-s.becoming()            # False — this is not a quiet resolution
-s.sublation()           # True  — it doesn't collapse into falsehood
+s.contradiction()  # True  — the tension is real and detectable
+s.becoming()  # False — this is not a quiet resolution
+s.sublation()  # True  — it doesn't collapse into falsehood
 
 # The next round
 t2 = s.as_thesis()
@@ -70,4 +73,7 @@ t2 = s.as_thesis()
 
 # 📜 Libre Software
 
-If you have ideas for improvements or new features, please open an issue or submit a pull request. Make sure to follow the existing code style and include tests for any new functionality. Licensed under the MIT License, so you are free to use, modify, and distribute this software. Please refer to the [LICENSE](LICENSE) for more!
+If you have ideas for improvements or new features, please open an issue or submit a
+pull request. Make sure to follow the existing code style and include tests for any new
+functionality. Licensed under the MIT License, so you are free to use, modify, and
+distribute this software. Please refer to the [LICENSE](LICENSE) for more!

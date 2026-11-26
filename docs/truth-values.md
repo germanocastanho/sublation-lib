@@ -10,14 +10,14 @@ A value is built from its two degrees. Both are required, because neither can be
 from sublation import TruthValue
 
 value = TruthValue(mu=0.8, lam=0.3)
-value.mu   # 0.8
+value.mu  # 0.8
 value.lam  # 0.3
 ```
 
 The degrees are ordinary attributes, and the constructor is the only place where they are checked. Each must fall within `[0.0, 1.0]`, and a violation raises immediately rather than producing a value that misbehaves at some later point:
 
 ```python
-TruthValue(mu=1.5, lam=0.0)   # ValueError: mu must be within [0.0, 1.0]
+TruthValue(mu=1.5, lam=0.0)  # ValueError: mu must be within [0.0, 1.0]
 TruthValue(mu=0.0, lam=-0.1)  # ValueError: lam must be within [0.0, 1.0]
 ```
 
@@ -28,8 +28,8 @@ Classical input enters the system through a helper that lands on one of the two 
 ```python
 from sublation.truths import truth_value_from_bool
 
-affirmed = truth_value_from_bool(True)    # mu=1.0, lam=0.0
-denied = truth_value_from_bool(False)     # mu=0.0, lam=1.0
+affirmed = truth_value_from_bool(True)  # mu=1.0, lam=0.0
+denied = truth_value_from_bool(False)  # mu=0.0, lam=1.0
 ```
 
 The lifting is total but not surjective: every bool becomes a `TruthValue`, while the contradictory and indeterminate corners are unreachable from a bool. This asymmetry is the formal statement of what the library adds — the two extra states have no classical preimage, so they can only arise from evidence gathered as such, or from operations that produce them.
@@ -60,8 +60,8 @@ The second order asks how *much is known*, irrespective of direction. Under it, 
 a = TruthValue(0.9, 0.4)
 b = TruthValue(0.3, 0.7)
 
-cons = a.consensus(b)    # mu=0.3, lam=0.4
-accu = a.accumulate(b)   # mu=0.9, lam=0.7
+cons = a.consensus(b)  # mu=0.3, lam=0.4
+accu = a.accumulate(b)  # mu=0.9, lam=0.7
 ```
 
 `consensus` takes the smaller of *both* degrees, retaining only what the two operands jointly warrant; anything one asserts without corroboration from the other is discarded. It is the skeptical combination, and it is how independent sources are reconciled when only their agreement counts. `accumulate` takes the larger of both, pooling every claim either side advances, for and against alike. It is the credulous combination — Belnap's *gullibility* — and it is how evidence is gathered when nothing is to be thrown away.
@@ -75,7 +75,7 @@ supported = TruthValue(1.0, 0.0)
 opposed = TruthValue(0.0, 1.0)
 
 supported.accumulate(opposed).is_contradictory()  # True
-supported.consensus(opposed).is_indeterminate()   # True
+supported.consensus(opposed).is_indeterminate()  # True
 ```
 
 ##### Why Minima and Maxima
@@ -95,11 +95,11 @@ Three properties follow, and together they characterize the operation as a De Mo
 ```python
 a, b = TruthValue(0.9, 0.1), TruthValue(0.3, 0.6)
 
-a.conjunction(b).invert()             # equals
-a.invert().disjunction(b.invert())    # this
+a.conjunction(b).invert()  # equals
+a.invert().disjunction(b.invert())  # this
 
-a.accumulate(b).invert()              # equals
-a.invert().accumulate(b.invert())     # this
+a.accumulate(b).invert()  # equals
+a.invert().accumulate(b.invert())  # this
 ```
 
 The two non-classical corners are fixed points. Inverting `(1.0, 1.0)` or `(0.0, 0.0)` returns the same value, which is correct: the denial of a contradiction is still contradictory, and the denial of something wholly unexamined remains unexamined. Classical negation has no fixed point, and its absence is precisely what forces bivalence.
@@ -115,10 +115,10 @@ Each predicate tests one quadrant of the unit square:
 ```python
 value = TruthValue(0.9, 0.1)
 
-value.is_true()            # True  — mu over, lam under
-value.is_false()           # False
-value.is_contradictory()   # False — would need both over
-value.is_indeterminate()   # False — would need both under
+value.is_true()  # True  — mu over, lam under
+value.is_false()  # False
+value.is_contradictory()  # False — would need both over
+value.is_indeterminate()  # False — would need both under
 ```
 
 `is_true` holds when `mu` has reached the threshold and `lam` has not; `is_false` is its mirror; `is_contradictory` holds when both have reached it; `is_indeterminate` when neither has. For any fixed threshold these four cases are exhaustive and mutually exclusive, so exactly one predicate holds for any value. An `if`/`elif` chain over all four therefore needs no fallback branch, and any two of them are enough to distinguish the pair a program actually cares about.
@@ -132,9 +132,9 @@ from sublation.truths import THRESHOLD
 
 value = TruthValue(0.6, 0.2)
 
-value.is_true()                  # True  — default threshold of 0.5
-value.is_true(threshold=0.8)     # False — a stricter standard
-value.is_indeterminate(0.8)      # True  — under it, nothing is settled
+value.is_true()  # True  — default threshold of 0.5
+value.is_true(threshold=0.8)  # False — a stricter standard
+value.is_indeterminate(0.8)  # True  — under it, nothing is settled
 ```
 
 Raising the threshold makes indeterminacy easier to reach and contradiction harder; lowering it does the reverse. Nothing enforces that a single threshold be used consistently across a program, so a value that reads as true in one place may read as indeterminate in another. Where this matters, fix the threshold once and pass it explicitly.
@@ -146,9 +146,9 @@ Raising the threshold makes indeterminacy easier to reach and contradiction hard
 ```python
 value = TruthValue(0.25, 0.0)
 
-value.to_bool()            # True  — mu exceeds lam
-value.is_true()            # False — mu never reached the threshold
-value.is_indeterminate()   # True  — the honest reading
+value.to_bool()  # True  — mu exceeds lam
+value.is_true()  # False — mu never reached the threshold
+value.is_indeterminate()  # True  — the honest reading
 ```
 
 `to_bool` is a *relative* comparison, `mu > lam`, and always returns an answer because one degree is always at least as large as the other. `is_true` is an *absolute* test against a threshold, and refuses to answer affirmatively when the evidence is thin. The divergence runs in both directions: a value can be `to_bool` true while indeterminate, as above, or while contradictory, as in `TruthValue(1.0, 0.5)`. Use `to_bool` only at the boundary where a bool must be produced regardless — and understand that it discards exactly the information the type exists to carry.
@@ -159,7 +159,7 @@ value.is_indeterminate()   # True  — the honest reading
 
 ```python
 TruthValue(1.0, 0.0) == TruthValue(1.0, 0.0)  # True
-repr(TruthValue(0.8, 0.3))                     # 'TruthValue(mu=0.8, lam=0.3)'
+repr(TruthValue(0.8, 0.3))  # 'TruthValue(mu=0.8, lam=0.3)'
 ```
 
 Equality of degrees is exact; equality of verdicts is weaker, since distinct degrees frequently fall in the same quadrant and share a predicate. Compare degrees when you need exact evidence match, and verdicts when you only need the same classification.

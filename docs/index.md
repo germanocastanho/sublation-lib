@@ -30,7 +30,7 @@ Because the two degrees vary independently, the pair spans four extremal states 
 The decisive property is that `lam` is not `1 - mu`. Under that constraint the pair would collapse back into a single degree and reproduce fuzzy logic, where contradiction and ignorance are again inexpressible: both would map to `0.5`. Keeping the degrees independent is what distinguishes "the evidence is evenly split and abundant" from "there is no evidence at all", two states that a single number cannot separate.
 
 ```python
-contested.mu + contested.lam    # 2.0 — abundant evidence, pulling both ways
+contested.mu + contested.lam  # 2.0 — abundant evidence, pulling both ways
 unexamined.mu + unexamined.lam  # 0.0 — no evidence in either direction
 ```
 
@@ -44,7 +44,7 @@ from sublation.truths import THRESHOLD
 THRESHOLD  # 0.5
 
 contested.is_contradictory()  # True
-unexamined.is_indeterminate() # True
+unexamined.is_indeterminate()  # True
 ```
 
 Each of the four predicates — `is_true`, `is_false`, `is_contradictory`, `is_indeterminate` — accepts a `threshold` argument, so the standard of evidence is a decision belonging to the caller rather than a constant of the logic. For any fixed threshold the four predicates partition the unit square: exactly one holds for any pair of degrees. There is no gap between them and no overlap, which is what makes them safe to use as an exhaustive case analysis.
@@ -73,4 +73,4 @@ The `Dialectical` base class in `sublation.core` is likewise importable, but it 
 
 ##### On Version Stability
 
-This documentation describes version 0.3.1, whose development status is Alpha. The four-valued semantics of `TruthValue` are stable. `Thesis` and `Antithesis` now accept continuous degrees as well as bools, and the inferred complement is confined to the bool path — code that constructs `TruthValue` directly, or that passes both degrees explicitly, is on firmer ground than code that depends on the inferred-complement behavior described in [Dialectics](dialectics.md).
+This documentation describes version 0.4.0, whose development status is Alpha. The four-valued semantics of `TruthValue` are stable. `Thesis` and `Antithesis` now accept continuous degrees as well as bools, and the inferred complement is confined to the bool path — code that constructs `TruthValue` directly, or that passes both degrees explicitly, is on firmer ground than code that depends on the inferred-complement behavior described in [Dialectics](dialectics.md).

@@ -7,9 +7,9 @@
 All three classes derive from `Dialectical`, which holds no state of its own. Each subclass is responsible for populating three fields in its `__init__`, and the four inherited methods read those fields identically regardless of which subclass produced them:
 
 ```python
-value: TruthValue   # the evidential state
-thesis: bool        # whether mu reached the threshold
-antithesis: bool    # whether lam reached the threshold
+value: TruthValue  # the evidential state
+thesis: bool  # whether mu reached the threshold
+antithesis: bool  # whether lam reached the threshold
 ```
 
 The `thesis` and `antithesis` attributes are thresholded readings of the two degrees, retained as a convenience and as the interface through which rounds are chained. They are derived, never authoritative: `value` is what the methods consult. `Dialectical` is not usable on its own — the three fields are annotations without defaults, so instantiating it directly and calling a method raises `AttributeError`. It is a shared implementation, not an abstract interface, and not an extension point at this version.
@@ -21,8 +21,8 @@ A thesis is a proposition asserted as posited. Asserting it ordinarily denies it
 ```python
 from sublation import Thesis
 
-posited = Thesis(True)          # mu=1.0, lam=0.0
-denied = Thesis(False)          # mu=0.0, lam=1.0
+posited = Thesis(True)  # mu=1.0, lam=0.0
+denied = Thesis(False)  # mu=0.0, lam=1.0
 ```
 
 ### Overriding the Inference
@@ -30,11 +30,11 @@ denied = Thesis(False)          # mu=0.0, lam=1.0
 The inferred complement is a default, not a law, and it belongs to the bool path alone. Supplying `antithesis` explicitly breaks the classical linkage, one way to reach the two non-classical corners from a `Thesis`:
 
 ```python
-contested = Thesis(True, True)    # mu=1.0, lam=1.0 — both asserted
-unexamined = Thesis(False, False) # mu=0.0, lam=0.0 — neither asserted
+contested = Thesis(True, True)  # mu=1.0, lam=1.0 — both asserted
+unexamined = Thesis(False, False)  # mu=0.0, lam=0.0 — neither asserted
 
-contested.contradiction()         # True
-unexamined.sublation()            # False — nothing has been settled
+contested.contradiction()  # True
+unexamined.sublation()  # False — nothing has been settled
 ```
 
 That a single library call decides between the classical and the non-classical reading is the practical content of the whole design. `Thesis(True)` and `Thesis(True, True)` agree on the evidence for and differ on the evidence against; classical logic cannot express the difference, because it derives the second from the first.
@@ -44,8 +44,8 @@ That a single library call decides between the classical and the non-classical r
 A degree may also be a float in `[0.0, 1.0]`, and then the interior of the square becomes reachable, not only its corners. A continuous thesis infers *no* complement — asserting evidence for a proposition says nothing about the evidence against it, which is the independence the whole library rests on:
 
 ```python
-graded = Thesis(0.7)          # mu=0.7, lam=0.0 — nothing asserted against
-both = Thesis(0.7, 0.2)       # mu=0.7, lam=0.2 — each degree given verbatim
+graded = Thesis(0.7)  # mu=0.7, lam=0.0 — nothing asserted against
+both = Thesis(0.7, 0.2)  # mu=0.7, lam=0.2 — each degree given verbatim
 ```
 
 The bool `False` and the float `0.0` therefore diverge, and the divergence is the point: `Thesis(False)` denies the proposition (`mu=0.0, lam=1.0`), while `Thesis(0.0)` merely declines to support it (`mu=0.0, lam=0.0`) and stays indeterminate. Only the bool carries the classical inference; the float carries only what it states.
@@ -57,8 +57,8 @@ An antithesis is a proposition asserted as the negation of a thesis, and it mirr
 ```python
 from sublation import Antithesis
 
-asserted = Antithesis(True)     # mu=0.0, lam=1.0
-withheld = Antithesis(False)    # mu=1.0, lam=0.0
+asserted = Antithesis(True)  # mu=0.0, lam=1.0
+withheld = Antithesis(False)  # mu=1.0, lam=0.0
 ```
 
 ### The Asymmetry of the Signatures
@@ -68,7 +68,7 @@ The first positional parameter of `Thesis` is `thesis`; the first positional par
 One consequence is worth stating plainly, because it surprises on first encounter:
 
 ```python
-Thesis().thesis, Thesis().antithesis          # (True, False)
+Thesis().thesis, Thesis().antithesis  # (True, False)
 Antithesis().thesis, Antithesis().antithesis  # (True, False) — identical
 ```
 
@@ -82,7 +82,7 @@ A synthesis is built from an actual thesis and an actual antithesis, and it read
 from sublation import Synthesis
 
 s = Synthesis(Thesis(True), Antithesis(True))
-s.value.mu, s.value.lam   # (1.0, 1.0)
+s.value.mu, s.value.lam  # (1.0, 1.0)
 ```
 
 ### Projection, Not Pooling
@@ -93,7 +93,7 @@ s.value.mu, s.value.lam   # (1.0, 1.0)
 a = Synthesis(Thesis(True), Antithesis(True))
 b = Synthesis(Thesis(True, True), Antithesis(True))
 
-(a.value.mu, a.value.lam) == (b.value.mu, b.value.lam)   # True
+(a.value.mu, a.value.lam) == (b.value.mu, b.value.lam)  # True
 ```
 
 The inference therefore matters when a `Thesis` is interrogated on its own, and not when it is fed into a synthesis. Both facts are easy to forget in the other's presence.
@@ -105,8 +105,8 @@ Pooling both sides with `accumulate` would be the obvious alternative, and it is
 ```python
 t, a = Thesis(False), Antithesis(False)
 
-t.value.accumulate(a.value).is_contradictory()   # True — spurious
-Synthesis(t, a).value.is_indeterminate()         # True — the honest reading
+t.value.accumulate(a.value).is_contradictory()  # True — spurious
+Synthesis(t, a).value.is_indeterminate()  # True — the honest reading
 ```
 
 Projection avoids this by never letting an inferred degree cross into the synthesis. An alternative constructor built on `accumulate` was considered and rejected for exactly this reason; projection stays the rule, and explicit pooling remains available on `TruthValue.accumulate()`.
@@ -116,9 +116,9 @@ Projection avoids this by never letting an inferred degree cross into the synthe
 Because the projection reads one degree from each side, the four bool combinations map onto the four states exactly, with no redundancy and no gaps:
 
 ```python
-Synthesis(Thesis(True), Antithesis(True))    # (1.0, 1.0) contradictory
-Synthesis(Thesis(True), Antithesis(False))   # (1.0, 0.0) true
-Synthesis(Thesis(False), Antithesis(True))   # (0.0, 1.0) false
+Synthesis(Thesis(True), Antithesis(True))  # (1.0, 1.0) contradictory
+Synthesis(Thesis(True), Antithesis(False))  # (1.0, 0.0) true
+Synthesis(Thesis(False), Antithesis(True))  # (0.0, 1.0) false
 Synthesis(Thesis(False), Antithesis(False))  # (0.0, 0.0) indeterminate
 ```
 
@@ -135,10 +135,10 @@ Every dialectical object answers the same four questions. Each delegates to a pr
 ```python
 s = Synthesis(Thesis(True), Antithesis(True))
 
-s.negation()        # False — does the denial hold cleanly?
-s.contradiction()   # True  — do both sides hold at once?
-s.becoming()        # False — is this a clean, uncontested affirmation?
-s.sublation()       # True  — has the question been settled either way?
+s.negation()  # False — does the denial hold cleanly?
+s.contradiction()  # True  — do both sides hold at once?
+s.becoming()  # False — is this a clean, uncontested affirmation?
+s.sublation()  # True  — has the question been settled either way?
 ```
 
 `becoming` is `is_true` on the underlying value: the moment at which a position stands affirmed without contest. `contradiction` is `is_contradictory`, the state that motivates the library, and the one a bool cannot hold. `negation` inverts the value and asks whether the result is cleanly true, which is exactly equivalent to asking whether the original is false — evidence against has carried, evidence for has not. `sublation` renders *Aufhebung*: it holds when the value is no longer indeterminate, that is, when it has been determined in some direction, whether by affirmation, by denial, or by standing contradiction.
@@ -157,7 +157,7 @@ A synthesis is not a terminus. `as_thesis` re-posits it as the thesis of a furth
 first = Synthesis(Thesis(True), Antithesis(False))
 second = Synthesis(first.as_thesis(), Antithesis(True))
 
-second.contradiction()   # True — the new antithesis contests the position
+second.contradiction()  # True — the new antithesis contests the position
 ```
 
 `as_thesis` reconstructs from the synthesis's own `mu` and `lam`, passing both degrees explicitly so the inferred complement never intervenes and no thresholding occurs. The resulting thesis carries the exact degrees of the synthesis it came from — the four corners as before, and now any interior value as well, so intermediate certainty survives the chaining. Re-positing changes the role a value plays, never the value itself.
