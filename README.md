@@ -15,26 +15,20 @@ logics such as Eτ.
 # ✅ Prerequisites
 
 - Python 3.12+ installed on your machine
-- No runtime dependencies; dev extras declared in `pyproject.toml`
+- Dependency manager `uv` (optional)
 
 # ⚙️ Local Installation
 
 ### For regular use:
 
 ```bash
-# Clone the repository
-git clone https://github.com/germanocastanho/sublation-lib
-cd sublation-lib/
-
 # Create a venv (optional)
-python3 -m venv .venv
+uv venv .venv
 source .venv/bin/activate
 
-# Install sublation package
-pip install -e .
+# Install dependencies
+uv pip install sublation
 ```
-
-Or just `pip install sublation`!
 
 ### For development:
 
@@ -43,15 +37,12 @@ Or just `pip install sublation`!
 git clone https://github.com/germanocastanho/sublation-lib
 cd sublation-lib/
 
-# Create a venv (optional)
-python3 -m venv .venv
+# Create a venv
+uv venv .venv
 source .venv/bin/activate
 
-# Install sublation package with dev extras
-pip install -e ".[dev]"
-
-# Run full test suite
-pytest
+# Install dependencies
+uv pip install -r requirements.txt
 ```
 
 # 🚀 Getting Started
