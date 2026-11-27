@@ -30,7 +30,7 @@
 - [x] Decide the interpretive reading adopted (Priest vs. Bordignon)
 - [x] Close out CHANGELOG.md `[0.1.0]` with the real release date
 - [x] Document `TruthValue`/`truths` in README and CHANGELOG `[Unreleased]`
-- [ ] Fix `docs/truth-values.md`: it claims `TruthValue` defines neither `__eq__` nor `__repr__` — both exist; correct the caveats section
+- [x] Fix `docs/truth-values.md`: it claims `TruthValue` defines neither `__eq__` nor `__repr__` — both exist; correct the caveats section
 - [ ] Add an API reference page listing every public method with its signature
 
 ## Tooling
@@ -48,3 +48,5 @@
 - [x] Bump version for the next development cycle (`0.2.0`, given the observable `negation()` behavior change)
 - [x] Split `operators.py` out of `truths.py` once the truth-value domain grows further — done (commit e17a277)
 - [x] Bump version for the next development cycle (`0.4.0`)
+- [x] Publish 0.4.0 to PyPI (2026-11-26) via `uv build` + `uv publish`
+- [x] Bump version for the next development cycle (`0.4.1`)

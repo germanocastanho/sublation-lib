@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. The format 
 on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.1] - 2026-11-26
+
+### Changed
+
+- Package relocated from `src/sublation` to the project root; `pyproject.toml` dropped in favor of a pinned `requirements.txt` installed via `uv`.
+- Supported Python range remains 3.12–3.14; CI green across the matrix.
+
 ## [0.4.0] - 2026-11-26
 
 ### Changed
