@@ -6,4 +6,5 @@ pluggy==1.7.0
 pygments==2.21.0
 pytest==9.2.0
 ruff==0.17.6
+setuptools==84.2.1
 sortedcontainers==2.4.0
